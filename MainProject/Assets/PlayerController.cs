@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
+    public Animator anim;
     Rigidbody rigid;
 
     private void Start()
@@ -15,11 +16,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigid.velocity = new Vector3(
-            Input.GetAxis("Horizontal") * moveSpeed,
-            0,
-            Input.GetAxis("Vertical") * moveSpeed
-            );
+        Vector3 _angle = new Vector3(Input.GetAxis("Horizontal"), 0,
+        Input.GetAxis("Vertical"));
+
+        rigid.velocity = _angle * moveSpeed;
+
+        if(_angle != Vector3.zero &&
+            (Mathf.Abs( Input.GetAxisRaw("Horizontal")) + 
+            Mathf.Abs( Input.GetAxisRaw("Vertical")) > 0.15f))
+        {
+            transform.rotation = Quaternion.LookRotation(_angle);
+        }
+
+        if(rigid.velocity == Vector3.zero) 
+            anim.SetInteger("animation", 1);
+        else 
+            anim.SetInteger("animation", 2);
+
 
         if (Input.GetButtonDown("360_A_Button"))
         {
