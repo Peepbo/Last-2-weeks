@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
     public int index = 0;
     [Space]
 
+    [Header("Stat")]
     public float moveSpeed;
-    float saveSpeed;
+    public float jumpForce = 5f;
+    [Space]
     public Animator anim;
+
+    float saveSpeed;
 
     Rigidbody rigid;
 
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             moveSpeed = 0;
             rigid.velocity = Vector3.zero;
+            rigid.velocity = Vector3.down * 2f;
         }
     }
 
@@ -50,30 +55,28 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(_lookAngle);
         }
 
-        RaycastHit hit;
+        Vector3 _checkVelocity = rigid.velocity;
+        _checkVelocity.y = 0;
 
-        if (rigid.velocity == Vector3.zero)
+        if (_checkVelocity == Vector3.zero)
             anim.SetInteger("animation", 1);
         else
             anim.SetInteger("animation", 2);
-        //else if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
-        //{
-        //    Debug.Log(hit.transform.name);
 
-        //    anim.SetInteger("animation", 2);
-        //}
-        //else
-        //{
-        //    Debug.Log("jump");
-        //    anim.SetInteger("animation", 3);
-        //}
 
-        Debug.DrawRay(transform.position, Vector3.down * 1f);
+        Debug.DrawRay(transform.position, Vector3.down * 1.5f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f))
+        {
+            anim.SetBool("isGround", true);
+        }
+        else anim.SetBool("isGround", false);
+
 
         if (Input.GetButtonDown("360_A_Button"))
         {
-            //anim.SetInteger("animation", 3);
-            rigid.AddForce(Vector3.up * 5f,ForceMode.Impulse);
+            anim.SetTrigger("Jump");
+            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         if (Input.GetButtonDown("360_B_Button"))
         {

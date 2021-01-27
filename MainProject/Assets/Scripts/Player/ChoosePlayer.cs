@@ -22,6 +22,7 @@ public class ChoosePlayer : MonoBehaviour
         if (order == 0) order = 1;
         else order = 0;
 
+        SwapCharCamera.ChangeCam();
         instance.StartCoroutine(SetDelay());
     }
 
