@@ -7,10 +7,11 @@ public class Mush : MonoBehaviour
     float nutrition = 0.0f;
     public Quests mushQuest;
 
+   
     void Start()
     {
-        nutrition = Random.Range(0.2f, 0.5f);
-        int size = (int)(nutrition * 15.0f);
+        nutrition = Random.Range(0.2f, 5.0f);
+        int size = (int)(nutrition * 10.0f);
         transform.localScale = new Vector3(size, size, size);
     }
 
