@@ -70,7 +70,13 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isGround", true);
         }
-        else anim.SetBool("isGround", false);
+        else
+        {
+            anim.SetBool("isGround", false);
+            //Vector3 _velo = rigid.velocity;
+            //_velo.y -= 1.5f;
+            //rigid.velocity = _velo;
+        }
 
 
         if (Input.GetButtonDown("360_A_Button"))
