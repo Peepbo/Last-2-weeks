@@ -79,26 +79,26 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("360_A_Button"))
-        {
-            anim.SetTrigger("Jump");
-            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        //if (Input.GetButtonDown("360_A_Button"))
+        //{
+        //    anim.SetTrigger("Jump");
+        //    rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //}
         if (Input.GetButtonDown("360_B_Button"))
         {
-            Debug.Log("Button Down B button!");
+            //Debug.Log("Button Down B button!");
         }
         if (Input.GetButtonDown("360_X_Button"))
         {
-            Debug.Log("Button Down X button!");
+            //Debug.Log("Button Down X button!");
         }
         if (Input.GetButtonDown("360_Y_Button"))
         {
-            Debug.Log("Button Down Y button!");
+            //Debug.Log("Button Down Y button!");
         }
         if (Input.GetButtonDown("360_LB_Button"))
         {
-            Debug.Log("Player " + index);
+            //Debug.Log("Player " + index);
             ChoosePlayer.instance.ChangeOrder();
         }
     }
