@@ -37,7 +37,9 @@ public class CogPuzzle : MonoBehaviour
     {
         if (index != -1)
         {
- 
+            Vector3 _childPos = transform.GetChild(num[index]).position;
+            //  num 2 0 1 3 
+            //index 1     num[index] =0
             if (_childPos.x < 6)
             {
                 if (Input.GetButtonDown("360_B_Button"))
@@ -68,7 +70,7 @@ public class CogPuzzle : MonoBehaviour
             {
                 if (Input.GetButtonDown("360_A_Button"))
                 {
-                    SetPos(Vector3.down);
+                   SetPos(Vector3.down);
                 }
             }
         }
