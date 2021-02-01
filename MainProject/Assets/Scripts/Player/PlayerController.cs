@@ -79,11 +79,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        //if (Input.GetButtonDown("360_A_Button"))
-        //{
-        //    anim.SetTrigger("Jump");
-        //    rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //}
+        if (Input.GetButtonDown("360_A_Button"))
+        {
+            anim.SetTrigger("Jump");
+            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
         if (Input.GetButtonDown("360_B_Button"))
         {
             //Debug.Log("Button Down B button!");
