@@ -289,9 +289,9 @@ GameObject:
   m_Component:
   - component: {fileID: 746129201176384842}
   - component: {fileID: 746129201176611177}
+  - component: {fileID: 746129201176611179}
   - component: {fileID: 746129201176611183}
   - component: {fileID: 746129201176611181}
-  - component: {fileID: 746129201176611179}
   m_Layer: 0
   m_Name: NPC_Planta
   m_TagString: Untagged
@@ -329,6 +329,19 @@ CapsuleCollider:
   m_Height: 1.2520393
   m_Direction: 1
   m_Center: {x: 2.3650898e-10, y: 0.5503086, z: 0.0149325915}
+--- !u!135 &746129201176611179
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746129201176611178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.8996414
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!95 &746129201176611183
 Animator:
   serializedVersion: 3
@@ -361,19 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTalk: 0
---- !u!135 &746129201176611179
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 746129201176611178}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.8996414
-  m_Center: {x: 0.000000019232914, y: 0.71897936, z: 0.68066335}
+  place: 0
 --- !u!1 &746129201176611180
 GameObject:
   m_ObjectHideFlags: 0
