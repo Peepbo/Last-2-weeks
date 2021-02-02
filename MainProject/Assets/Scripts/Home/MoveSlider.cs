@@ -5,14 +5,16 @@ using UnityEngine;
 public class MoveSlider : MonoBehaviour
 {
     public OpenSprite openSprite;
+
     [Space]
     public GameObject fireNpc;
+
+    [Space]
     public GameObject effect;
     public Transform effectPt;
 
+    [Space]
     public float speed = 1f;
-
-    public bool isClear = false;
 
     float left = 0.94f;
     float right = 1.635f;
@@ -22,34 +24,37 @@ public class MoveSlider : MonoBehaviour
 
     int clearCount = 3;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        isOn = true;
-    }
+    private void OnTriggerEnter2D(Collider2D collision) => isOn = true;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision) => isOn = false;
+
+    void init()
     {
+        isLeft = false;
         isOn = false;
+
+        clearCount = 3;
+        speed = 1f;
+
+        Vector3 _pos = transform.position;
+        _pos.x = left;
+        transform.position = _pos;
     }
 
     private void Update()
     {
-        if(openSprite.isIn == false)
-        {
-            openSprite.lightTiming.SetActive(false);
-            clearCount = 3;
-            isLeft = false;
-            isOn = false;
-            Vector3 _samplePos = transform.position;
-            _samplePos.x = left;
-            transform.position = _samplePos;
-            speed = 1f;
-        }
-        //
+        if(openSprite.isIn == false && isOn == false) init();
 
-        if(!isLeft)
+        ChangeDirection();
+
+        ButtonDown();
+    }
+
+    void ChangeDirection()
+    {
+        if (!isLeft)
         {
-            if(transform.position.x < right) transform.Translate(Vector3.right * Time.deltaTime * speed);
+            if (transform.position.x < right) transform.Translate(Vector3.right * Time.deltaTime * speed);
 
             else isLeft = true;
         }
@@ -59,7 +64,10 @@ public class MoveSlider : MonoBehaviour
 
             else isLeft = false;
         }
+    }
 
+    void ButtonDown()
+    {
         if (clearCount > 0 && isOn && Input.GetButtonDown("360_B_Button"))
         {
             clearCount--;
@@ -73,7 +81,6 @@ public class MoveSlider : MonoBehaviour
 
     void EndPuzzle()
     {
-        isClear = true;
         HomeQuest.instance.ClearQuest(0);
         fireNpc.SetActive(true);
         transform.parent.gameObject.SetActive(false);
