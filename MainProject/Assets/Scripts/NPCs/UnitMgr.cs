@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitMgr : MonoBehaviour
 {
     public bool isTalk = false;
-    protected bool isStare = false;
+    protected bool isCol = false;
     protected GameObject target;
     protected Vector3 direction;
     protected Quaternion startRotation;
@@ -22,15 +22,6 @@ public class UnitMgr : MonoBehaviour
 
     }
 
-    protected virtual void Update()
-    {
-        if (isStare)
-        {
-            Stare();
-        }
-        else transform.rotation = startRotation;
-
-    }
 
     protected virtual void Stare()
     {
@@ -47,14 +38,29 @@ public class UnitMgr : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Player"))
-            isStare = true;
+        if (other.CompareTag("Player"))
+        {
+            isCol = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Equals("Player"))
-            isStare = false;
+        if (other.CompareTag("Player"))
+            isCol = false;
     }
 
+    public Vector3 GetRandomDirection(bool isXDir = false, bool isYDir = false, bool isZDir = false)
+    {
+        Vector3 _a = new Vector3(0, 0, 0);
+        int _rnd;
+
+        if (isXDir)
+        {
+            _rnd = Random.Range(-1, 2);
+            _a.x += _rnd;
+        }
+
+        return _a;
+    }
 }
