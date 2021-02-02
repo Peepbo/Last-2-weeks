@@ -3,26 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 public class CogPuzzle : MonoBehaviour
 {
+    public Animator cogAnim;
     public GameObject button;
+    public GameObject finalCog;
     public int[] num = new int[4] { 0, 1, 2, 3 };
     public int index = -1;
-
-
+    private int cnt = 0;
+    private float speed = 3f;
 
     void Start()
     {
         SwapIndex();
+       
     }
 
     void Update()
     {
         MoveCogs();
 
+        if (cnt == 4)
+        {
+            Vector3 _mainCog = finalCog.transform.position;
 
+            if (_mainCog.x > 0)
+            {
+                cogAnim.SetBool("IsActive", true);
+                _mainCog.x -= speed * Time.deltaTime;
+                finalCog.transform.position = _mainCog;
+            }
+            else cogAnim.SetBool("IsActive", false);
+        }
     }
+
     void MoveCogs()
     {
         if (index != -1)
@@ -34,16 +48,16 @@ public class CogPuzzle : MonoBehaviour
             {
                 if (Input.GetButtonDown("360_B_Button"))
                 {
-                    _childPos += Vector3.right;
+                    SetPos(Vector3.right);
                 }
 
             }
-            
+
             if (_childPos.x > -6)
             {
                 if (Input.GetButtonDown("360_X_Button"))
                 {
-                    _childPos += Vector3.left;
+                    SetPos(Vector3.left);
                 }
             }
 
@@ -51,19 +65,45 @@ public class CogPuzzle : MonoBehaviour
             {
                 if (Input.GetButtonDown("360_Y_Button"))
                 {
-                    _childPos += Vector3.up;
-                }
-            }
-            
-            if(_childPos.y > 3)
-            {
-                if(Input.GetButtonDown("360_A_Button"))
-                {
-                    _childPos += Vector3.down;
+                    SetPos(Vector3.up);
+
                 }
             }
 
-            transform.GetChild(num[index]).position = _childPos;
+            if (_childPos.y > 3)
+            {
+                if (Input.GetButtonDown("360_A_Button"))
+                {
+                    SetPos(Vector3.down);
+                }
+            }
+        }
+    }
+
+    //주소
+    private void SetPos(Vector3 movePos)
+    {
+        transform.GetChild(num[index]).position += movePos;
+        CheckClear();
+    }
+
+    public void CheckClear()
+    {
+        if (index != -1)
+        {
+            int _count = transform.childCount;
+
+            cnt = 0;
+            for (int i = 0; i < _count; i++)
+            {
+                if (transform.GetChild(i).position.x == 0 &&
+                    transform.GetChild(i).position.y == 6)
+                {
+                    cnt++;
+                    //여기에 브레이크가 있어서 하나만 더해지고 for문을 나가버림
+                }
+            }
+
         }
     }
 
@@ -78,9 +118,10 @@ public class CogPuzzle : MonoBehaviour
             _dest = num[_ran];
             num[_ran] = num[i];
             num[i] = _dest;
-
         }
 
     }
+
+
 }
 
