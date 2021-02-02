@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class CogPuzzle : MonoBehaviour
 {
+    public Animator cogAnim;
     public GameObject button;
     public GameObject finalCog;
     public int[] num = new int[4] { 0, 1, 2, 3 };
     public int index = -1;
     private int cnt = 0;
-    private float speed = 1.5f;
+    private float speed = 3f;
 
     void Start()
     {
         SwapIndex();
+       
     }
 
     void Update()
@@ -27,9 +29,11 @@ public class CogPuzzle : MonoBehaviour
 
             if (_mainCog.x > 0)
             {
+                cogAnim.SetBool("IsActive", true);
                 _mainCog.x -= speed * Time.deltaTime;
                 finalCog.transform.position = _mainCog;
             }
+            else cogAnim.SetBool("IsActive", false);
         }
     }
 
@@ -70,7 +74,7 @@ public class CogPuzzle : MonoBehaviour
             {
                 if (Input.GetButtonDown("360_A_Button"))
                 {
-                   SetPos(Vector3.down);
+                    SetPos(Vector3.down);
                 }
             }
         }
