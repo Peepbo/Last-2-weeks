@@ -11,13 +11,23 @@ public class HomeQuest : MonoBehaviour
     public TimeLimit timeLimit;
 
     bool bonfireQuest = false;
+    bool raiseCup = false;
 
     private void Awake() { instance = this; }
 
-    public void ClearQuest() 
+    public void Clear() 
     { 
         bonfireQuest = true;
         openSprite.gameObject.SetActive(false);
         timeLimit.gameObject.SetActive(false);
+    }
+
+    public void ClearQuest(int index)
+    {
+        if(index == 0) bonfireQuest = true;
+
+        else raiseCup = true;
+
+        if (bonfireQuest && raiseCup) Clear();
     }
 }

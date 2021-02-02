@@ -49,13 +49,13 @@ public class MoveSlider : MonoBehaviour
 
         if(!isLeft)
         {
-            if(transform.position.x < right) transform.Translate(Vector3.right * 0.01f * speed);
+            if(transform.position.x < right) transform.Translate(Vector3.right * Time.deltaTime * speed);
 
             else isLeft = true;
         }
         else
         {
-            if (transform.position.x > left) transform.Translate(Vector3.left * 0.01f * speed);
+            if (transform.position.x > left) transform.Translate(Vector3.left * Time.deltaTime * speed);
 
             else isLeft = false;
         }
@@ -74,8 +74,9 @@ public class MoveSlider : MonoBehaviour
     void EndPuzzle()
     {
         isClear = true;
-        HomeQuest.instance.ClearQuest();
+        HomeQuest.instance.ClearQuest(0);
         fireNpc.SetActive(true);
         transform.parent.gameObject.SetActive(false);
+        PlayerController.isMatchItem = false;
     }
 }

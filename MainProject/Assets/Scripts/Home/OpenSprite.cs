@@ -22,6 +22,8 @@ public class OpenSprite : MonoBehaviour
 
         deActiveAct = () =>
         {
+            if (PlayerController.isMatchItem == false) return;
+
             if (lightTiming.activeSelf) lightTiming.SetActive(false);
 
             buttonSprite.GetComponent<Animator>().SetTrigger("Out");
@@ -31,7 +33,12 @@ public class OpenSprite : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) ActiveAct();
+        if (other.CompareTag("Player"))
+        {
+            if (PlayerController.isMatchItem == false) return;
+
+            ActiveAct();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -43,7 +50,7 @@ public class OpenSprite : MonoBehaviour
     {
         if(isIn)
         {
-            if (Input.GetButtonDown("360_X_Button"))
+            if (PlayerController.isMatchItem && Input.GetButtonDown("360_X_Button"))
             {
                 lightTiming.SetActive(true);
                 buttonSprite.SetActive(false);

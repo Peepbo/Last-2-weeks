@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rigid;
 
+    public static bool isMatchItem;
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();

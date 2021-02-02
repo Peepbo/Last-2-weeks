@@ -14,6 +14,6 @@ public class TimeLimit : MonoBehaviour
 
     public void Update()
     {
-        if(slider.value < 1) slider.value += 0.0001f;
+        if(slider.value < 1) slider.value += 0.01f * Time.deltaTime;
     }
 }
