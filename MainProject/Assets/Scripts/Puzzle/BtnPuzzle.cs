@@ -12,6 +12,9 @@ public class BtnPuzzle : MonoBehaviour
     public bool isClear = false;
 
     public GameObject panel;
+
+    public float countDown = 0f;
+
     void Start()
     {
         for (int i = 0; i < 3; i++)
@@ -31,10 +34,17 @@ public class BtnPuzzle : MonoBehaviour
         {
             isClear = true;
             panel.SetActive(true);
-            PlayerPrefs.SetString("ButtonPuzzle", "clear");
-            count = 0;
-            SceneManager.LoadScene("StartScene");
+
+            countDown += Time.deltaTime;
+            if(countDown >=1.5f)
+            {
+                PlayerPrefs.SetString("ButtonPuzzle", "clear");
+                count = 0;
+                SceneManager.LoadScene("StartScene");
+            }    
+
         }
+
     }
 
     public void SendMyNumber(int clickNumber)
