@@ -1,18 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
 
 [System.Serializable]
 public class ButtonPuzzle2 : MonoBehaviour
 {
+    public GameObject endPuzzle;
+
     public List<GameObject> btn;
+
+    public int[] index = { -1, -1 };
+    public int pivot = 0;
+
+    int maxPoint;
+    public int point;
 
     private void Awake()
     {
+        index[0] = index[1] = -1;
+
+        GetObjs();
+
+        SetColors();
+
+        Suffle();
+    }
+
+    private void GetObjs()
+    {
         GameObject[] obj = new GameObject[transform.childCount];
 
-        for(int i = 0; i < transform.childCount; i++) 
+        for (int i = 0; i < transform.childCount; i++)
             obj[i] = transform.GetChild(i).gameObject;
 
         for (int i = 0; i < obj.Length; i++)
@@ -24,27 +44,18 @@ public class ButtonPuzzle2 : MonoBehaviour
             }
         }
 
-        //빨간색 2의 배수 개
-        //파란색 2의 배수 개
-        //노란색 2의 배수 개
-        //초록색 2의 배수 개
+        maxPoint = btn.Count / 2;
+    }
 
-        //2a + 2b + 2c + 2d + 2e = btn.count;
+    private void SetColors()
+    {
         int a, b, c, d;
-        //0~29 .. 14
-        //29-14 = 30
 
-        //48
-        //16,14,12,12
-
-        a = 2 * Random.Range(5, 9);
-        Debug.Log("a : " + a);
-        b = 2 * Random.Range(5, 8);
-        Debug.Log("b : " + b);
-        c = 2 * Random.Range(5, 7);
-        Debug.Log("c : " + c);
-        d = btn.Count - a - b - c;
-        Debug.Log("d : " + d);
+        //13
+        a = btn.Count / 4 + 1;
+        b = btn.Count / 4 + 3;
+        c = btn.Count / 4 - 1;
+        d = btn.Count / 4 - 1;
 
         int[] _counts = { a, b, c, d };
         Color[] _colors = { Color.red, Color.blue, Color.yellow, Color.green };
@@ -55,20 +66,24 @@ public class ButtonPuzzle2 : MonoBehaviour
         //그린이 d개
         int _order = 0;
         int _colorOrder = 0;
-        for(int i = 0; i < btn.Count; i++)
+        for (int i = 0; i < btn.Count; i++)
         {
             if (_order == _counts[_colorOrder])
             {
-                _order = 0;
+                _order = 1;
                 _colorOrder++;
                 if (_order == _counts[_colorOrder]) _colorOrder++;
             }
             else _order++;
 
-            btn[i].GetComponent<ButtonInfo>().myColor = _colors[_colorOrder];
-        }
+            ButtonInfo _info = btn[i].GetComponent<ButtonInfo>();
 
-        Suffle();
+            int local = i;
+
+            _info.myColor = _colors[_colorOrder];
+            _info.setAct = () => ClickBtn(local);
+            _info.myIndex = local;
+        }
     }
 
     [ContextMenu("Suffle")]
@@ -89,5 +104,53 @@ public class ButtonPuzzle2 : MonoBehaviour
             _idxInfo.myColor = _iInfo.myColor;
             _iInfo.myColor = _Color;
         }
+    }
+
+    private bool ClearCheck()
+    {
+        return maxPoint == point;
+    }
+
+    private void ClickBtn(int idx)
+    {
+        if (ClearCheck()) return;
+
+        if (btn[idx].GetComponent<ButtonInfo>().myColor == Color.clear) return;
+
+        if (index[0] == idx) return;
+
+        if(index[0] != -1 && btn[index[0]].GetComponent<ButtonInfo>().myColor == Color.clear) return;
+
+        index[pivot] = idx;
+
+        if (pivot == 1)
+        {
+            pivot = 0;
+
+            if (btn[index[0]].GetComponent<ButtonInfo>().myColor
+                == btn[index[1]].GetComponent<ButtonInfo>().myColor)
+            {
+                btn[index[0]].GetComponent<ButtonInfo>().myColor = Color.clear;
+                btn[index[1]].GetComponent<ButtonInfo>().myColor = Color.clear;
+
+                point++;
+
+                if (ClearCheck())
+                {
+                    endPuzzle.SetActive(true);
+                    StartCoroutine(EndGame());
+                }
+            }
+
+            index[0] = index[1] = -1;
+        }
+        else pivot++;
+    }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(1.5f);
+        PlayerPrefs.SetString("ButtonPuzzle2", "clear");
+        SceneManager.LoadScene("StartScene");
     }
 }

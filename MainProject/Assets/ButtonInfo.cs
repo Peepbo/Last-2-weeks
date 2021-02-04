@@ -2,25 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class ButtonInfo : MonoBehaviour
 {
+    int idx;
     Image img;
+    Action btnAct;
+    
 
     public Color myColor
     {
         get 
         {
-            if (img == null) img = GetComponent<Image>();
-
             return img.color; 
         }
 
         set
         {
-            if (img == null) img = GetComponent<Image>();
-
             img.color = value;
+        }
+    }
+
+    public Action setAct
+    {
+        set
+        {
+            btnAct = value;
+            GetComponent<Button>().onClick.AddListener(() => btnAct());
+        }
+    }
+
+    public int myIndex
+    {
+        get
+        {
+            return idx;
+        }
+
+        set
+        {
+            idx = value;
         }
     }
 
