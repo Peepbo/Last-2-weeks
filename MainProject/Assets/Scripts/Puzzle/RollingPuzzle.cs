@@ -16,6 +16,9 @@ public class RollingPuzzle : MonoBehaviour
 
     public bool isClear;
 
+    public List<int> firstL = new List<int>();
+    public List<int> secondL = new List<int>();
+
     private void Awake()
     {
         firstLineImgs = objs[0].GetComponentsInChildren<Image>();
@@ -26,6 +29,12 @@ public class RollingPuzzle : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            firstL.Add(firstLine[i]);
+            secondL.Add(secondLine[i]);
+        }
+
         ChangeColor();
         txt.text = "";
         for (int i = 0; i < 4; i++)
@@ -67,6 +76,9 @@ public class RollingPuzzle : MonoBehaviour
             line = secondLine;
         }
 
+        //[],class -> new ~
+
+        //int bool -> new?
 
         int _temp = 0;
 
@@ -91,6 +103,47 @@ public class RollingPuzzle : MonoBehaviour
         }
     }
 
+    public void LBtn(int index)
+    {
+        //List<int> line;
+
+        //if(index ==0)
+        //{
+        //    line = firstL;
+        //}
+        //else
+        //{
+        //    line = secondL;
+        //}
+
+        //int temp = line[0];
+
+        //line.Add(temp);
+        //line.RemoveAt(0);
+
+        //배열, 리스트, 클래스, 구조체 등등
+
+        if (index == 0)
+        {
+            int temp = firstL[0];
+            firstL.Add(temp);
+            firstL.RemoveAt(0);
+        }
+        else
+        {
+            int temp = secondL[0];
+            secondL.Add(temp);
+            secondL.RemoveAt(0);
+        }
+    }
+
+    public void RBtn()
+    {
+        int lastIndex = firstL.Count - 1;
+        int temp = firstL[lastIndex];
+        firstL.Insert(0, temp);
+        firstL.RemoveAt(lastIndex);
+    }
 
     public void RightButton(int index)
     {
