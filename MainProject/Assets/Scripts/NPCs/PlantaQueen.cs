@@ -6,7 +6,7 @@ public class PlantaQueen : UnitMgr
 {
     public GameObject flower;
     private Vector3 rightPlace;
-    public bool isActive=false;
+    public bool isActive = false;
     public enum WHERE
     {
         TOWN, PLANTA_HOUSE, PUZZLE
@@ -17,7 +17,8 @@ public class PlantaQueen : UnitMgr
     protected override void Awake()
     {
         base.Awake();
-        rightPlace = flower.transform.position;
+        if (place == WHERE.PLANTA_HOUSE)
+            rightPlace = flower.transform.position;
     }
     void Start()
     {
@@ -27,7 +28,7 @@ public class PlantaQueen : UnitMgr
     // Update is called once per frame
     private void Update()
     {
-        
+
         switch (place)
         {
             case WHERE.TOWN:
@@ -38,11 +39,11 @@ public class PlantaQueen : UnitMgr
                     }
                     else transform.rotation = startRotation;
                 }
-               
+
                 break;
             case WHERE.PLANTA_HOUSE:
                 {
-                    if(isCol)
+                    if (isCol)
                     {
                         MoveFlower();
                     }
@@ -57,6 +58,6 @@ public class PlantaQueen : UnitMgr
 
     public void MoveFlower()
     {
-        
+
     }
 }

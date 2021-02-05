@@ -64,7 +64,6 @@ public class RollingPuzzle : MonoBehaviour
 
     public void LeftButton(int index)
     {
-
         int[] line;
 
         if (index == 0)
